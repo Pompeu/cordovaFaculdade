@@ -1,0 +1,57 @@
+<form ng-submit="vm.buscarCliene(vm.cpf)">
+  <label for="">Buscar Por CPF</label>
+  <input ng-disabled="vm.clients.length" type="text" ng-model="vm.cpf" required>
+  <button ng-disabled="vm.clients.length">Buscar</button>
+</form>
+<table ng-if="vm.cpf">
+   <tr>
+      <th>Nome</th>
+      <th>Cpf</th>
+   </tr>
+   <tr ng-repeat="cliente in vm.clients">
+      <td>{{cliente.name}}</td>
+      <td>{{cliente.cpf}}</td>
+   </tr>
+</table>
+<div ng-if="vm.clients.length">
+  <form ng-submit="vm.buscarFilme(codigo)">
+    <label for="">Buscar Por Codigo</label>
+    <input type="text" ng-model="codigo" required>
+    <button>Buscar</button>
+  </form>
+  <table>
+     <tr>
+        <th>nome</th>
+        <th>valor</th>
+     </tr>
+     <tr ng-repeat="filme in vm.filmes">
+        <td>{{filme.name}}</td>
+        <td>{{filme.valor | currency:" R$ "}}</td>
+     </tr>
+  </table>
+</div>
+<div ng-if="vm.filmes.length">
+  <button ng-click="vm.addFilme(filme)">Add</button>
+</div>
+<div ng-if="vm.filmesAlugados.length"> 
+  <table>
+       <tr>
+          <th>nome</th>
+          <th>valor</th>
+          <th>Quantidade</th>
+       </tr>
+       <tr ng-repeat="filme in vm.filmesAlugados">
+          <td>{{filme.name}}</td>
+          <td>{{filme.valor | currency:" R$ "}}</td>
+       </tr>      
+  </table>
+   <div>
+      <p>Total  = {{vm.total | currency:" R$ "}}</p>
+      <p>Total de filmes = {{vm.filmesAlugados.length}}</p>
+      <div>Finalizar Venda :
+      <input type="checkbox" ng-model="chk">
+      <button ng-if="chk" ng-click="vm.fecharAluguel()"> fechar Vendar</button>
+      </div>      
+      
+    </div>
+</div>
