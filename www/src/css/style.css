@@ -2,6 +2,36 @@
   padding: 0;
   margin: 0 auto;  
 }
+ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+a {
+  padding: 2px;
+}
 
-input:invalid { border: 1px solid red; }
-input:valid { border: 1px solid green; }
+.main {
+  margin: 0px auto;
+  width: 100%;
+}
+
+.main-img{
+  height: 180px;
+  width:270px;
+  border:1px solid;
+  border-color: gray;
+}
+.main-menu,.md-raised{
+  width:270px;
+}
+.main-dados, .main-img{
+  text-align: justify;
+  width:270px;
+  border:1px solid;
+  border-color: gray;
+}
+
+.btn-voltar {
+  margin-left: 210px;
+}

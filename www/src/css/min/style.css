@@ -1,0 +1,9 @@
+*,ul{padding:0}
+*{margin:0 auto}
+ul{list-style-type:none;margin:0}
+a{padding:2px}
+.main{margin:0 auto;width:100%}
+.main-img{height:180px}
+.main-menu,.md-raised{width:270px}
+.main-dados,.main-img{text-align:justify;width:270px;border:1px solid;border-color:gray}
+.btn-voltar{margin-left:210px}
