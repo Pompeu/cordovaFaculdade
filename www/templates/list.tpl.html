@@ -1,7 +1,7 @@
 <md-content class="md-padding" style="padding: 24px;">
   <md-card>
     <a href="#">inicio</a>
-    <md-item ng-repeat="item in itens">
+    <md-item ng-repeat="item in vm.itens">
     <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
       <a ng-href="#/item/{{item.id}}">
         <h3>{{item.name}}</h3>

@@ -1,118 +1,62 @@
 (function(){
   'use strict';
+
   angular.module('App')
-  .factory('Alunofactory',['$http','$q',
-    function ($http, $q) { 
-    var url = 'https://bloog-limp.herokuapp.com/api/alunos/';
-    var deferred = $q.defer();
-    return {
-      getAlunos : function() {
-        $http.get(url)
-        .success(function(data) {
-          deferred.resolve(data);          
-        })
-        .error(function(err) {
-          deferred.reject(err);
-        })        
-        return deferred.promise;
-      },
-      getById : function(id) {
-        $http.get(url+id)
-        .success(function(data) {
-          deferred.resolve(data);          
-        })
-        .error(function(err) {
-          deferred.reject(err);
-        })        
-        return deferred.promise;
-      },
-      create : function(aluno) {
-        $http.post(url,aluno)
-        .success(function(data) {
-          deferred.resolve(data);          
-        })
-        .error(function(err) {
-          deferred.reject(err);
-        })        
-        return deferred.promise;
-      },
-      deleteById : function(id) {
-        $http.delete(url+id)
-        .success(function(data) {
-          deferred.resolve(data);          
-        })
-        .error(function(err) {
-          deferred.reject(err);
-        })        
-        return deferred.promise;
-      },
-      update : function(aluno) {
-        $http.put(url+aluno._id,aluno)
-        .success(function(data) {
-          deferred.resolve(data);          
-        })
-        .error(function(err) {
-          deferred.reject(err);
-        })        
-        return deferred.promise;
-      }       
-    }
-  }])  
-  .controller('AlunoCtrl',['Alunofactory',
-  function ( Alunofactory ) {
+  .controller('AlunoCtrl', AlunoCtrl)
+  .controller('AlunoEditCtrl',AlunoEditCtrl)
+  .controller('AlunoAddCtrl',AlunoAddCtrl)
+
+  AlunoCtrl.$inject =  ['Alunofactory','$location'];
+
+  function AlunoCtrl (Alunofactory , $location) {
     var vm = this;
-    vm.alunos = null;
+    vm.alunos = [];
 
     Alunofactory.getAlunos()
-    .then(function(result) {
-      vm.alunos =  result;
-    }, function(reason) {
-      console.log('Failed: ' + reason);
-    }, function(update) {
-      console.log('Got notification: ' + update);
+    .then(function(data) {      
+        vm.alunos = data;
+      return vm.alunos;
     });
-    vm.deletar = function(id) {
-      console.log(id);
+
+    vm.deletar = function(index , id) {
+      Alunofactory.deleteById(id)
+      .then(function(data) {
+        vm.alunos.splice(index,1);
+       return $location.path('/listaluno');
+      });
     };
     
-  }])
-  .controller('AlunoEditCtrl', ['$routeParams','Alunofactory',
-   function ($routeParams, Alunofactory) {
+  }
+  
+  AlunoEditCtrl.$inject = ['$routeParams','Alunofactory','$location'];
+
+  function AlunoEditCtrl($routeParams, Alunofactory, $location) {
     var vm = this;
     vm.name = "Editar";
  
     vm.aluno = JSON.parse($routeParams.aluno);
-    vm.save = function() {
-      console.log("update");
-      console.log(vm.aluno);
-      
-      /*Alunofactory.update(vm.aluno)
-      .then(function(result) {
-        console.log(result);
-      }, function(reason) {
-        console.log('Failed:'+reason);
-      }, function(update) {
-        console.log('Got notification: ' +update);
-      });*/
+
+    vm.save = function() {    
+      Alunofactory.update(vm.aluno)
+      .then(function(data) {
+        return $location.path('/listaluno');
+        console.log(data);
+      });
     };
-  }])
-  .controller('AlunoAddCtrl', ['Alunofactory',
-   function (Alunofactory) {
+  }
+
+  AlunoAddCtrl.$inject =  ['Alunofactory','$location'];
+
+  function AlunoAddCtrl (Alunofactory , $location) {
     var vm = this;
     vm.name = "Cadastro";
    
     vm.save = function() { 
-      console.log("add");
-      console.log(vm.aluno);
-      
-      /*Alunofactory.create(vm.aluno)
+      Alunofactory.create(vm.aluno)
       .then(function(result) {
+        return $location.path('/listaluno');
         console.log(result);
-      },function(reason) {
-        console.log('Failed:'+reason);
-      },function(update) {
-        console.log('Got notification: ' +update);
-      });*/
+      });
     };
-  }])  
+  } 
 })();

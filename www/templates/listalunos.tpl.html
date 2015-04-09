@@ -1,5 +1,5 @@
 <md-content class="md-padding" layout="column" layout-sm="column">
-  <md-progress-linear class="md-warn" ng-if="!vm.alunos.length" md-mode="indeterminate">
+  <md-progress-linear class="md-padding" ng-if="!vm.alunos.length" md-mode="indeterminate">
   </md-progress-linear>
  
   <md-list ng-if="vm.alunos.length">
@@ -17,7 +17,7 @@
           <md-button md-no-ink class="md-primary" 
           ng-href="#update/{{aluno}}"> Editar</md-button>
           <md-button md-no-ink class="md-warn" 
-          ng-click="vm.deletar(aluno._id)"> deletar</md-button>
+          ng-click="vm.deletar($index ,aluno._id)"> deletar</md-button>
         </div>
       </md-item-content>
     <md-item>

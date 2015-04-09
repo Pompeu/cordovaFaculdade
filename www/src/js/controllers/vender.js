@@ -1,6 +1,12 @@
 (function(){
+  'use strict';
+
   angular.module('App')
-  .controller('VendasCtrl',function () {
+  .controller('VendasCtrl',VendasCtrl);
+
+  VendasCtrl.$inject = ['$location'];
+  
+  function VendasCtrl($location) {
     var vm = this;
     vm.marcado = false;
     vm.filme = null;
@@ -8,30 +14,35 @@
     vm.filmes = [];
     vm.filmesAlugados = [];
     vm.total = 0;
+
     vm.buscarCliene = function(cpf) {     
       vm.clients = vm.listCli.filter(function(v) {
         return v.cpf == cpf;
       })
-    };   
+    };
+
     vm.buscarFilme = function(codigo) {
       vm.filmes = vm.listFilmes.filter(function(v) {
         return v.codigo == codigo;
       })
     };
+
     vm.addFilme = function() {
-      vm.filmesAlugados.push(vm.filmes[0])
+      var filme = vm.filmes[0];      
+      vm.filmesAlugados.push(filme);
       vm.total += parseFloat(vm.filmes[0].valor);
 
     };
+
     vm.fecharAluguel = function() {
       vm.saida = {
         filmes : vm.filmesAlugados,
         total : vm.total,
         client : vm.clients[0]
       }
-
       console.log(vm.saida)
     };
+
     vm.listCli =  [
       { 
         name : 'Itacir',
@@ -46,6 +57,7 @@
         cpf : '3'
       }
     ];
+
     vm.listFilmes =[
       { 
         name : 'Piratas Cabibe',
@@ -61,8 +73,8 @@
         name : 'Trança vovo Careca',
         codigo : 3,
         valor : '10.01'
-      },
+      }
     ];
-  })    
+  };    
 }()); 
   
