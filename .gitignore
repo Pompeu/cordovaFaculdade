@@ -1,2 +1,2 @@
-/www/bower*
-/www/node_*
+/www/bower_componentes/
+/www/node_modules/
